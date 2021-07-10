@@ -1,6 +1,4 @@
-#include <SDL.h>
-#include <iostream>
-#include <memory>
+#include "spectroGram.hpp"
 
 
 class ctrlApp
@@ -18,4 +16,7 @@ private:
     SDL_Window   *m_window;
     SDL_Renderer *m_window_renderer;
     SDL_Event     m_window_event;
+    SDL_Rect rect;
+    spectroGram * spectrogram;
+    int idx = 0;
 };
