@@ -27,6 +27,7 @@ bool FFT(TComplexArray2D & data, const size_t size1, const size_t size2,
 {
     return impl::CFFT<TComplexArray2D,2>::FFT_inplace(data, size1, size2, impl::FFT_FORWARD,
                                                       error_description);
+}
 
 template <class TComplexArray3D>
 bool FFT(TComplexArray3D & data, const size_t size1, const size_t size2, const size_t size3,
