@@ -19,4 +19,5 @@ private:
     SDL_Rect rect;
     spectroGram * spectrogram;
     int idx = 0;
+    int idx2 = 2000;
 };

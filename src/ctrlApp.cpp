@@ -7,7 +7,7 @@ ctrlApp::ctrlApp()
 
     rect.x = 0;
     rect.y = 0;
-    rect.w = 100;
+    rect.w = 1;
     rect.h = 1;
 
     spectrogram = new spectroGram();
@@ -43,7 +43,7 @@ ctrlApp::ctrlApp()
 
 ctrlApp::~ctrlApp()
 {
-    SDL_FreeWAV(wavBuffer);
+    
     SDL_Quit();
     SDL_DestroyRenderer(m_window_renderer);
     SDL_DestroyWindow(m_window);
@@ -64,33 +64,46 @@ void ctrlApp::run()
             }
         }
 
-        update(1.0 / 60.0);
         draw();
+        update(1.0 / 60.0);
+
     }
 }
 
 void ctrlApp::update(double delta_time)
 {
     idx++;
+    //std::cout << "idx " << idx << std::endl;
     rect.y++;
     if (idx == 512)
     {
         idx = 0;
         rect.y = 0;
+        idx2++;
+        rect.x+=1;
+        //SDL_RenderPresent(m_window_renderer);
     }
 }
 
 void ctrlApp::draw()
 {
-    //SDL_RenderClear(m_window_renderer);
+    
 
     
-    SDL_SetRenderDrawColor(m_window_renderer, 0, 0, spectrogram->get_log_magnitude()[idx][idx], 255);
+    SDL_SetRenderDrawColor(m_window_renderer, 0, spectrogram->get_log_magnitude()[idx2][idx], 0,0);
     SDL_RenderFillRect(m_window_renderer, &rect);
-
+    
     SDL_RenderPresent(m_window_renderer);
+    //SDL_RenderClear(m_window_renderer);
+    
+/*
+ if (idx2 == ( spectrogram->get_log_magnitude().size() - 1 ))
+    {
+         //SDL_RenderPresent(m_window_renderer);
+         return true;
 
-
+    }
+*/
 
     
 }
