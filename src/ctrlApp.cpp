@@ -1,7 +1,5 @@
 #include "ctrlApp.hpp"
 
-
-
 ctrlApp::ctrlApp()
 {
 
@@ -34,19 +32,29 @@ ctrlApp::ctrlApp()
         return;
     }
 
-            // Select the color for drawing. It is set to red here.
-        SDL_SetRenderDrawColor(m_window_renderer, 255, 255, 255, 255);
+    // Select the color for drawing. It is set to red here.
+    SDL_SetRenderDrawColor(m_window_renderer, 255, 255, 255, 255);
 
-        // Clear the entire screen to our selected color.
-        SDL_RenderClear(m_window_renderer);
+    // Clear the entire screen to our selected color.
+    SDL_RenderClear(m_window_renderer);
+
+    Tile = SDL_CreateTexture(m_window_renderer, SDL_PIXELFORMAT_RGBA8888,
+                             SDL_TEXTUREACCESS_STREAMING, 1024, 512);
+
+    textureBuffer = new Uint32[1024*512];
+    memset (textureBuffer,0,sizeof(Uint32)); 
+                         
 }
 
 ctrlApp::~ctrlApp()
 {
-    
+
     SDL_Quit();
+    SDL_DestroyTexture(Tile);
+    Tile = NULL;
     SDL_DestroyRenderer(m_window_renderer);
     SDL_DestroyWindow(m_window);
+    delete [] textureBuffer;
 }
 
 void ctrlApp::run()
@@ -66,44 +74,27 @@ void ctrlApp::run()
 
         draw();
         update(1.0 / 60.0);
-
     }
 }
 
 void ctrlApp::update(double delta_time)
 {
-    idx++;
-    //std::cout << "idx " << idx << std::endl;
-    rect.y++;
-    if (idx == 512)
-    {
-        idx = 0;
-        rect.y = 0;
-        idx2++;
-        rect.x+=1;
-        //SDL_RenderPresent(m_window_renderer);
-    }
+
+    SDL_UpdateTexture( Tile , NULL, textureBuffer, 1024 * sizeof (uint32_t));
+    SDL_RenderPresent(m_window_renderer);
 }
 
 void ctrlApp::draw()
 {
-    
+int yPos = 0;
+int xPos = 0;
+int nx = 1024;
+int ig = 10;
+int ib = 10; 
+int ir = 10;
 
-    
-    SDL_SetRenderDrawColor(m_window_renderer, 0, spectrogram->get_log_magnitude()[idx2][idx], 0,0);
-    SDL_RenderFillRect(m_window_renderer, &rect);
-    
-    SDL_RenderPresent(m_window_renderer);
-    //SDL_RenderClear(m_window_renderer);
-    
-/*
- if (idx2 == ( spectrogram->get_log_magnitude().size() - 1 ))
-    {
-         //SDL_RenderPresent(m_window_renderer);
-         return true;
+std::cout << "textureBuff " << *textureBuffer << std::endl;
 
-    }
-*/
+//this->textureBuffer[(yPos*nx) + xPos] = 0xFF000000 | (ir<<16) | (ib<<8) | ig;
 
-    
 }

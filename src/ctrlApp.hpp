@@ -17,7 +17,9 @@ private:
     SDL_Renderer *m_window_renderer;
     SDL_Event     m_window_event;
     SDL_Rect rect;
+    SDL_Texture *Tile;
     spectroGram * spectrogram;
     int idx = 0;
     int idx2 = 2000;
+    Uint32 *textureBuffer;
 };
