@@ -34,13 +34,13 @@ spectroGram::spectroGram()
 
     float max_value = 0;
 
-    for (size_t k = 0; k < num_samples; k += 1)
+    for (size_t k = 0; k < num_samples - WINDOW_SIZE; k += 1)
     {
 
         for (int i = 0; i < WINDOW_SIZE; i++)
         {
             double multiplier = 0.5 * (1 - cos(2 * PI * i / 1023));
-            dataOut[i] = multiplier * stream16[i+k];
+            dataOut[i] = multiplier * stream16[i + k];
         }
 
         const char *error = NULL; // error description
@@ -62,23 +62,36 @@ spectroGram::spectroGram()
             }
         }
 
+        //fftshift
+
+        float tmp;
+
+        #if 0
+        for (int i = 0; i < WINDOW_SIZE/2; i++)
+        {
+            tmp = single_log_magnitude[i];
+            single_log_magnitude[i] = single_log_magnitude[i + (WINDOW_SIZE/2)];
+            single_log_magnitude[i + (WINDOW_SIZE/2)] = tmp;
+        }
+        #endif
+
         log_magnitude.push_back(single_log_magnitude);
         single_log_magnitude.clear();
     }
 
-
     std::cout << "size " << log_magnitude[0].size() << std::endl;
 
-            //Normalization
+    //Normalization
     for (int k = 0; k < log_magnitude.size(); k++)
     {
         for (int i = 0; i < WINDOW_SIZE; i++)
         {
-            log_magnitude[k][i] = std::round((log_magnitude[k][i] / max_value) * 255);
+            log_magnitude[k][i] = std::round((log_magnitude[k][i] / max_value) * 65535);
             //std::cout << "magnit" << single_log_magnitude[i] << std::endl;
         }
-     }
+    }
 
+    std::cout << "size k " << log_magnitude.size() << std::endl;
 
     if (SDL_AUDIO_ISFLOAT(wavSpec.format))
     {

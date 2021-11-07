@@ -19,7 +19,8 @@ private:
     SDL_Rect rect;
     SDL_Texture *Tile;
     spectroGram * spectrogram;
-    int idx = 0;
-    int idx2 = 2000;
+    int x_pos = 0;
+    int y_pos = 0;
+    int offset = 0;
     Uint32 *textureBuffer;
 };
