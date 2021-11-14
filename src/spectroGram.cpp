@@ -31,6 +31,7 @@ spectroGram::spectroGram()
     }
 
     std::vector<float> single_log_magnitude;
+    std::vector<float> half_single_log_magnitude(WINDOW_SIZE/2,0.0);
 
     float max_value = 0;
 
@@ -39,8 +40,8 @@ spectroGram::spectroGram()
 
         for (int i = 0; i < WINDOW_SIZE; i++)
         {
-            double multiplier = 0.5 * (1 - cos(2 * PI * i / 1023));
-            dataOut[i] = multiplier * stream16[i + k];
+            float multiplier = 0.5 * (1.0 - cos(2.0 * PI * (float)i / (WINDOW_SIZE/2 -1.0)));
+            dataOut[i] = multiplier * (float)stream16[i + k];
         }
 
         const char *error = NULL; // error description
@@ -62,32 +63,39 @@ spectroGram::spectroGram()
             }
         }
 
-        //fftshift
+        //fSelect half spectrum
 
         float tmp;
+        
 
-        #if 0
+        #if 1
         for (int i = 0; i < WINDOW_SIZE/2; i++)
         {
             tmp = single_log_magnitude[i];
+            
             single_log_magnitude[i] = single_log_magnitude[i + (WINDOW_SIZE/2)];
             single_log_magnitude[i + (WINDOW_SIZE/2)] = tmp;
+            half_single_log_magnitude[511 - i]=single_log_magnitude[i + (WINDOW_SIZE/2)];
         }
         #endif
 
-        log_magnitude.push_back(single_log_magnitude);
+        log_magnitude.push_back(half_single_log_magnitude);
         single_log_magnitude.clear();
+
     }
+
+
+    
 
     std::cout << "size " << log_magnitude[0].size() << std::endl;
 
     //Normalization
     for (int k = 0; k < log_magnitude.size(); k++)
     {
-        for (int i = 0; i < WINDOW_SIZE; i++)
+        for (int i = 0; i < WINDOW_SIZE/2; i++)
         {
-            log_magnitude[k][i] = std::round((log_magnitude[k][i] / max_value) * 65535);
-            //std::cout << "magnit" << single_log_magnitude[i] << std::endl;
+            log_magnitude[k][i] = (log_magnitude[k][i] / max_value);
+            //std::cout << "magnit" << log_magnitude[k][i] << std::endl;
         }
     }
 

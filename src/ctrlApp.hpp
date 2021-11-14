@@ -1,4 +1,5 @@
 #include "spectroGram.hpp"
+#include "../lib/colourmanager/colourmanager.h"
 
 
 class ctrlApp
@@ -23,4 +24,7 @@ private:
     int y_pos = 0;
     int offset = 0;
     Uint32 *textureBuffer;
+    float lowerRange=0;
+	float upperRange=100;
+	ColourManager manager{0.0,1.0};
 };

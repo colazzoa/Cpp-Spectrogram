@@ -8,7 +8,7 @@
 
 #define PI 3.14
 
-#define WINDOW_SIZE 512
+#define WINDOW_SIZE 1024
 
 class spectroGram
 {
@@ -16,7 +16,6 @@ public:
     spectroGram();
     ~spectroGram();
     std::vector<std::vector<float>> get_log_magnitude();
-    //void run();
     
 private:
 	Uint32 wavLength;

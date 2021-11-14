@@ -15,7 +15,7 @@ ctrlApp::ctrlApp()
 
     draw();
 
-    m_window = SDL_CreateWindow("SDL2 Window",
+    m_window = SDL_CreateWindow("Spectrogram of italian 'a' vowel sound",
                                 SDL_WINDOWPOS_CENTERED,
                                 SDL_WINDOWPOS_CENTERED,
                                 1024, 512,
@@ -104,9 +104,7 @@ void ctrlApp::draw()
 {
 
     int nx = 1024;
-    int ig = 0;
-    int ib = 0;
-    int ir = 255;
+    int ig,ib,ir,alpha;
 
 
 
@@ -118,11 +116,14 @@ void ctrlApp::draw()
     //std::cout << "ib " << ib << std::endl;
     for (int idx = 0; idx < 1024; idx++)
     {
-        for (int idx2 = 511; idx2 > -1; idx2--)
+        for (int idx2 = 0; idx2 < WINDOW_SIZE/2; 
+        idx2++)
         {
-            int alpha = 255;
-            ir = ((int)local_vect[idx][511-idx2]) >> 8;
-            alpha = (int)local_vect[idx][511-idx2] & 0x00FF;
+            Colour c = manager.getInterpolatedColour((local_vect[idx][idx2]));
+            ir = c.getIntR();
+            ig = c.getIntG();
+            ib = c.getIntB();
+            alpha = c.getAlpha();
             //this->textureBuffer[(idx2 * nx) + (idx)] = 0xFF000000 | (ir << 16) | (ib << 8) | ig;
             this->textureBuffer[(idx2 * nx) + (idx)] = (ir << 24) | (ig << 16) | (ib << 8) | alpha ;
         }
