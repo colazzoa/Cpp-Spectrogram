@@ -16,19 +16,26 @@ In speech, the vocal tract resonant frequencies are called formants. We can see 
 
 The formants can be easily identified throuhout a spectrogram of the sound signal. A spectrogram is a visual representation of the spectrum of frequencies of a signal as it varies with time. When applied to an audio signal, spectrograms are sometimes called sonographs, voiceprints, or voicegrams. When the data are represented in a 3D plot they may be called waterfalls. [R2]
 
-In a spectrogram, time is depicted on the x-axis while frequency on the y-axis. Intensity is represented by the relative 
-darkness of the frequencies shown. The formants (resonant frequencies; the loudest) are the darker bands that correspond to the 
-peaks in the spectra [R1].
+In a spectrogram, time is depicted on the x-axis while frequency on the y-axis. Intensity is represented by the relative darkness of the frequencies shown. The formants (resonant frequencies; the loudest) are the darker bands that correspond to the peaks in the spectra [R1].
 
 In my case, the spectrogram of the vowel italian sound "a" obtained by Audacity software is:
 
+![image](https://user-images.githubusercontent.com/45873694/141794316-dc34df43-778f-4d2e-b9c5-1da3c7e09e97.png)
+
+It is possibile to recgonize the formants frequencies ad the darker bands.
+
+The Spectrogram produced by my C++ application follows:
+
+![image](https://user-images.githubusercontent.com/45873694/141794593-aef224a4-eeeb-4fce-9b0a-acfbd45d30ca.png)
 
 
 
 
 
+References:
 
 [R1](http://www.u.arizona.edu/~ohalad/Phonetics/notes/Formants%20Spectrograms%20and%20Vowels.PDF)
+
 [R2](https://en.wikipedia.org/wiki/Spectrogram)
 ## Rubric Points addressed
 
