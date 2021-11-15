@@ -6,8 +6,8 @@ ctrlApp::ctrlApp()
     //creat spectrogram object: wav file is loaded and processed
     spectrogram = new spectroGram();
 
-    textureBuffer = new Uint32[TIME_AXIS_SIZE * (WINDOW_SIZE / 2)];
-    memset(textureBuffer, 0, sizeof(Uint32));
+    textureBuffer = std::unique_ptr<Uint32[]>(new Uint32[TIME_AXIS_SIZE * (WINDOW_SIZE / 2)]());
+    memset(textureBuffer.get(), 0, sizeof(Uint32));
 
     m_window = SDL_CreateWindow("Spectrogram of italian 'a' vowel sound",
                                 SDL_WINDOWPOS_CENTERED,
@@ -54,7 +54,6 @@ ctrlApp::~ctrlApp()
     Tile = NULL;
     SDL_DestroyRenderer(m_window_renderer);
     SDL_DestroyWindow(m_window);
-    delete[] textureBuffer;
 }
 
 /*Keep window opened till quit signal is received*/
@@ -80,7 +79,7 @@ void ctrlApp::run()
 /* Update SDL texture and render to the screen */
 void ctrlApp::update()
 {
-    SDL_UpdateTexture(Tile, NULL, textureBuffer, TIME_AXIS_SIZE * sizeof(uint32_t));
+    SDL_UpdateTexture(Tile, NULL, textureBuffer.get(), TIME_AXIS_SIZE * sizeof(uint32_t));
     SDL_RenderCopy(m_window_renderer, Tile, NULL, NULL);
     SDL_RenderPresent(m_window_renderer);
 }

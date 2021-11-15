@@ -19,6 +19,6 @@ private:
     SDL_Event     m_window_event;
     SDL_Texture *Tile;
     spectroGram * spectrogram;
-    Uint32 *textureBuffer;
+    std::unique_ptr<Uint32[]> textureBuffer;
 	ColourManager manager{0.0,1.0};
 };
