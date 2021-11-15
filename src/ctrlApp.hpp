@@ -1,13 +1,13 @@
 #include "spectroGram.hpp"
 #include "../lib/colourmanager/colourmanager.h"
 
+#DEFINE TIME_AXIS_SIZE 1024
 
 class ctrlApp
 {
 public:
     ctrlApp();
     ~ctrlApp();
-
     void run();
     void update(double delta_time);
     void draw();

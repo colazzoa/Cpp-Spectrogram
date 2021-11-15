@@ -2,45 +2,35 @@
 
 spectroGram::spectroGram()
 {
-
+    //Using SDL library to load.wav file into memory
     SDL_Init(SDL_INIT_AUDIO);
 
     // load WAV file
-
     SDL_AudioSpec wavSpec;
-
     SDL_LoadWAV("../src/a_.wav", &wavSpec, &wavBuffer, &wavLength);
 
+    //Print wav file main features
     std::cout << "Number of samples: " << wavSpec.samples << std::endl;
-    std::cout << "Freq: " << wavSpec.freq << std::endl;
-    std::cout << "Channels: " << wavSpec.channels << std::endl;
-
+    std::cout << "Freq: " << wavSpec.freq << " Hz" << std::endl;
     std::cout << "Size [bits]: " << 8 * wavLength << std::endl;
 
     int num_samples = (8 * wavLength) / (int)SDL_AUDIO_BITSIZE(wavSpec.format);
 
+    //Prepare input and output buffers to store frequency domain processing data
     int16_t *stream16 = (int16_t *)wavBuffer;
-
-    //int16_t dataOut[1024];
-
     real_type *dataOut = new real_type[WINDOW_SIZE];
 
-    for (size_t i = 0; i < (wavLength / 2); i++)
-    {
-        //std::cout << "stream of " << i << " = " << stream16[i] << std::endl;
-    }
-
     std::vector<float> single_log_magnitude;
-    std::vector<float> half_single_log_magnitude(WINDOW_SIZE/2,0.0);
+    std::vector<float> half_single_log_magnitude(WINDOW_SIZE / 2, 0.0);
 
     float max_value = 0;
 
+    //FFT Analysis to produce Spectrogram
     for (size_t k = 0; k < num_samples - WINDOW_SIZE; k += 1)
     {
-
         for (int i = 0; i < WINDOW_SIZE; i++)
         {
-            float multiplier = 0.5 * (1.0 - cos(2.0 * PI * (float)i / (WINDOW_SIZE/2 -1.0)));
+            float multiplier = 0.5 * (1.0 - cos(2.0 * PI * (float)i / (WINDOW_SIZE / 2 - 1.0)));
             dataOut[i] = multiplier * (float)stream16[i + k];
         }
 
@@ -52,62 +42,50 @@ spectroGram::spectroGram()
 
         ComplexArray1D out_fft_p = new complex_type[nt];
 
+        //FFT using open source library Simple_FFT
         auto b = simple_fft::FFT(dataOut, out_fft_p, nt, error);
+
         for (int i = 0; i < WINDOW_SIZE; i++)
         {
             single_log_magnitude.push_back(std::log10(std::sqrt((out_fft_p[i].real() * out_fft_p[i].real()) + (out_fft_p[i].imag() * out_fft_p[i].imag()))));
-            //std::cout << "magnit" << log_magnitude[i] << std::endl;
+
             if (single_log_magnitude[i] > max_value)
             {
+                //searching max value for normalization
                 max_value = single_log_magnitude[i];
             }
         }
 
-        //fSelect half spectrum
+        //FFT shifting and selection of upper spectrum
 
-        float tmp;
-        
-
-        #if 1
-        for (int i = 0; i < WINDOW_SIZE/2; i++)
+        for (int i = 0; i < WINDOW_SIZE / 2; i++)
         {
-            tmp = single_log_magnitude[i];
-            
-            single_log_magnitude[i] = single_log_magnitude[i + (WINDOW_SIZE/2)];
-            single_log_magnitude[i + (WINDOW_SIZE/2)] = tmp;
-            half_single_log_magnitude[511 - i]=single_log_magnitude[i + (WINDOW_SIZE/2)];
+            float tmp = single_log_magnitude[i];
+            single_log_magnitude[i] = single_log_magnitude[i + (WINDOW_SIZE / 2)];
+            single_log_magnitude[i + (WINDOW_SIZE / 2)] = tmp;
+            half_single_log_magnitude[(WINDOW_SIZE / 2) - 1 - i] = single_log_magnitude[i + (WINDOW_SIZE / 2)];
         }
-        #endif
 
         log_magnitude.push_back(half_single_log_magnitude);
         single_log_magnitude.clear();
-
     }
-
-
-    
-
-    std::cout << "size " << log_magnitude[0].size() << std::endl;
 
     //Normalization
     for (int k = 0; k < log_magnitude.size(); k++)
     {
-        for (int i = 0; i < WINDOW_SIZE/2; i++)
+        for (int i = 0; i < WINDOW_SIZE / 2; i++)
         {
             log_magnitude[k][i] = (log_magnitude[k][i] / max_value);
-            //std::cout << "magnit" << log_magnitude[k][i] << std::endl;
         }
     }
 
-    std::cout << "size k " << log_magnitude.size() << std::endl;
-
     if (SDL_AUDIO_ISFLOAT(wavSpec.format))
     {
-        printf("floating point data\n");
+        printf("Wav file contains floating point data\n");
     }
     else
     {
-        printf("integer data\n");
+        printf("Wav file contains integer data\n");
     }
 
     printf("%d bits per sample\n", (int)SDL_AUDIO_BITSIZE(wavSpec.format));

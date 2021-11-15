@@ -16,13 +16,9 @@ public:
     spectroGram();
     ~spectroGram();
     std::vector<std::vector<float>> get_log_magnitude();
-    
+
 private:
-	Uint32 wavLength;
-	Uint8 *wavBuffer;
+    Uint32 wavLength;
+    Uint8 *wavBuffer;
     std::vector<std::vector<float>> log_magnitude;
-    
 };
-
-
-
