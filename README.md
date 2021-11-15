@@ -12,6 +12,24 @@ Currently the application only support a basic spectral analysis of the above-me
 
 ## Theoretical background and code structure
 
+In speech, the vocal tract resonant frequencies are called formants. We can see them as the peaks in a spectrum. With vowels, the frequencies of the formants determine which vowel you hear and, in general, are responsible for the differences in quality among different periodic sounds. At any one point in time (as with spectra) there may be any number of formants, but for speech the most informative are the first three, appropriately referred to as F1, F2, and F3 [R1].
+
+The formants can be easily identified throuhout a spectrogram of the sound signal. A spectrogram is a visual representation of the spectrum of frequencies of a signal as it varies with time. When applied to an audio signal, spectrograms are sometimes called sonographs, voiceprints, or voicegrams. When the data are represented in a 3D plot they may be called waterfalls. [R2]
+
+In a spectrogram, time is depicted on the x-axis while frequency on the y-axis. Intensity is represented by the relative 
+darkness of the frequencies shown. The formants (resonant frequencies; the loudest) are the darker bands that correspond to the 
+peaks in the spectra [R1].
+
+In my case, the spectrogram of the vowel italian sound "a" obtained by Audacity software is:
+
+
+
+
+
+
+
+[R1](http://www.u.arizona.edu/~ohalad/Phonetics/notes/Formants%20Spectrograms%20and%20Vowels.PDF)
+[R2](https://en.wikipedia.org/wiki/Spectrogram)
 ## Rubric Points addressed
 
 README:
