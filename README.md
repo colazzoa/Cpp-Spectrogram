@@ -4,7 +4,7 @@ This is the repo for my Capstone project in the [Udacity C++ Nanodegree Program]
 
 This Capstone Project is meant to show mine ability to exploit what I learned throughout Udacity C++ Nanodegree program. A detailed list of the Capstone Project Rubric addressed points is available [here](#rubric-points-addressed).
 
-Since I am keen on signal processing I developed a C++ application which generates a graphic spectrogram of the sound of the italian vowel "a". Some theoretical backgrounds and code structure description can be found [here](theoretical-background-and-code-structure).
+Since I am keen on signal processing I developed a C++ application which generates a graphic spectrogram of the sound of the italian vowel "a". Some theoretical backgrounds and code structure description can be found [here](#theoretical-background-and-code-structure).
 
 The output spectrogram is compared with the one provided by a professional software [Audacity](https://www.audacityteam.org/download/).
 
@@ -66,7 +66,7 @@ Compiling & Testing:
 
 Loops, Functions, I/O
 1. The project demonstrates an understanding of C++ functions and control structures: see in many parts of the program code structure
-2. The project reads data from a file and process the data, or the program writes data to a file. (Spectrogram application read sound signal from a file)
+2. The project reads data from a file and process the data, or the program writes data to a file: Spectrogram application read sound signal from a file
 
 Object Oriented Programming:
 1. The project uses Object Oriented Programming techniques: the program is structured in classes.
