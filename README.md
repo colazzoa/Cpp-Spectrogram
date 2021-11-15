@@ -2,13 +2,13 @@
 
 This is a a repo for the Capstone project in the [Udacity C++ Nanodegree Program](https://www.udacity.com/course/c-plus-plus-nanodegree--nd213).
 
-This Capstone Project is meant to show mine ability to exploit what I learned throughout Udacity C++ Nanodegree program. A detailed list of the Capston Project Rubric addressed points is available [here](#Rubric Points addressed).
+This Capstone Project is meant to show mine ability to exploit what I learned throughout Udacity C++ Nanodegree program. A detailed list of the Capstone Project Rubric addressed points is available [here](#rubric-points-addressed).
 
-Since I am keen on signal processing I developed a C++ application wjich generates a graphic spectrogram of the sound of the italian vowel "a".
+Since I am keen on signal processing I developed a C++ application wjich generates a graphic spectrogram of the sound of the italian vowel "a". Some theoretical backgrounds and code structure description can be found [here](theoretical-background-and-code-structure).
 
 The output spectrogram is compared with the one provided by a professional software (Audacity).
 
-Currently the application only support a basic spectral analysis of the above-mentioned sound sample, [future plans](#Future plans) will be considering the introduction of new features. Code has been structured to support a potential evolution in the features list of the program.
+Currently the application only support a basic spectral analysis of the above-mentioned sound sample, [future plans](#future-plans) will be considering the introduction of new features. Code has been structured to support a potential evolution in the features list of the program.
 
 ## Theoretical background and code structure
 
