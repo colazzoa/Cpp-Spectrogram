@@ -37,14 +37,14 @@ Starting form a file .wav that contains the sound digital samples, to obtain a g
 3. Perform FFT to obtain the spectral analysis of the sound signal (I used [Simple FFT](#open-source-libraries) library properly configured)
 4. Calculate log magnitude of frequency domain components (natively implemented in C++)
 5. Normalize log magnitude value to obtain data that can be mapped on a colour map
-6. Map normalized colour value to a specific colour map (here I exploit the library [Colourmanager](#open-source-libraries))
+6. Map normalized colour value to a specific colour map (here I exploit the library [Spectrum](#open-source-libraries))
 7. Obtain a graphical representaion of the Spectrogram: here I used SDL2 library and the SDL Texture object.
 
 The above-mentioned algorithm has been implemented in a class structured software. All source code is into the src folder while some of the external libraries are into the lib folder.
 
 ![image](https://user-images.githubusercontent.com/45873694/141797256-0d88d49f-29f5-4371-bb77-96c2002f6f30.png)
 
-
+Algorithm steps 1 to 5 are implemented into the class Spectrogram. The remaining ones are mainly implemented into the class ctrlApp and main().
 
 References:
 
@@ -93,11 +93,10 @@ Memory Management:
   * Windows: recommend using [MinGW](http://www.mingw.org/)
 
 ## Open source libraries
-This program used the following external libraries:
-1. SDL
-   bla bla bla
-2. Simple FFT
-3. Colourmanager
+This program utilizes the following external libraries:
+1. [SDL](https://www.libsdl.org/)
+2. [Simple-FFT](https://github.com/d1vanov/Simple-FFT)
+3. [Spectrum](https://github.com/richardroberts1992/Spectrum)
    
 ## Basic Build Instructions
 1. Clone this repo.
